@@ -1,7 +1,7 @@
-# manga-api
+# Manga-api
 partie api du projet vueJS avec API
 
-manga:
+Schema d'un manga => 
   {
     "name": "",
     "type": "",
@@ -13,34 +13,37 @@ manga:
     "image": ""
   }
 
-Les différentes méthodes pour utiliser l'API
+
+
+
+Les différentes méthodes pour utiliser l'API :
 
 POST :
 
-  Création d'un objet Manga
+  Création d'un objet Manga => 
   http://127.0.0.1:8000/api/manga/new
 
 GET :
 
-  Lister les mangas disponibles
+  Lister les mangas disponibles => 
   http://127.0.0.1:8000/api/manga
 
-  Aperçu d'un manga
+  Aperçu d'un manga => 
   http://127.0.0.1:8000/api/manga/{id}
   
 PUT :
   
-  Editer la totalité d'un manga
+  Editer la totalité d'un manga => 
   http://127.0.0.1:8000/api/manga/edit/{id}
   
 PATCH :
 
-  Editer partiellement un manga
+  Editer partiellement un manga => 
   http://127.0.0.1:8000/api/manga/edit/{id}
   
 DELETE :
 
-  Supprimer un manga
+  Supprimer un manga => 
   http://127.0.0.1:8000/api/manga/{id}
   
 
