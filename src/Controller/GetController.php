@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Repository\MangasRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api')]
+#[Route('/api/manga')]
 class GetController extends AbstractController
 {
     #[Route('/', name: 'app_get', methods: 'GET')]
-    public function get(
+    public function index(
         MangasRepository $mangasRepo,
     ): JsonResponse {
 
@@ -20,5 +21,19 @@ class GetController extends AbstractController
         return $this->json([
             'mangas' => $mangas,
         ]);
+    }
+
+    #[Route('/{manga}', name: 'get_manga', methods: 'GET')]
+    public function get(
+        $manga,
+        MangasRepository $mangasRepo,
+    ): Response {
+        $manga = $mangasRepo->findOneBy(['id' => $manga]);
+
+        if ($manga === null) {
+            return $this->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($manga, Response::HTTP_OK);
     }
 }

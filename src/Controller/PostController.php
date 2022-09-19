@@ -8,24 +8,54 @@ use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
-#[Route('/api')]
+#[Route('/api/manga')]
 class PostController extends AbstractController
 {
-    #[Route('/post', name: 'api_post', methods: ['POST'])]
-    public function post(
+    #[Route('/new', name: 'api_post', methods: ['POST'])]
+    public function new(
         Request $request,
-        MangasRepository $mangaRepo,
-        SerializerInterface $serializer,
+        MangasRepository $mangasRepository,
     ): JsonResponse {
+        $data = json_decode($request->getContent(), true);
 
-        $manga = $serializer->deserialize($request->getContent(), Mangas::class, 'json');
-        $mangaRepo->add($manga, true);
+        $mangaAlreadyExist = $mangasRepository->findOneBy(['name' => $data['name']]);
+
+        if ($mangaAlreadyExist !== null) {
+            return $this->json(['message' => 'Manga déjà existant'], Response::HTTP_SEE_OTHER);
+        }
+
+        if (empty($data['name']) || empty($data['type']) || empty($data['author']) || empty($data['editor']) || empty($data['createdAt']) || empty($data['resume']) || empty($data['nbTomes']) || empty($data['image'])) {
+            return $this->json(['message' => 'Tous les champs doivent être renseignés'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $name = $data['name'];
+        $type = $data['type'];
+        $author = $data['author'];
+        $editor = $data['editor'];
+        $date = new \DateTime($data['createdAt']);
+        $resume = $data['resume'];
+        $nbTomes = $data['nbTomes'];
+        $image = $data['image'];
+
+        $newManga = new Mangas();
+        $newManga->setName($name)
+            ->setType($type)
+            ->setAuthor($author)
+            ->setEditor($editor)
+            ->setCreatedAt($date)
+            ->setResume($resume)
+            ->setNbTomes($nbTomes)
+            ->setImage($image);
+
+        $mangasRepository->add($newManga, true);
 
         return $this->json([
-            'manga' => $manga,
+            'manga' => $newManga,
+            'message' => 'Manga ajouté avec succès',
+            Response::HTTP_CREATED,
         ]);
     }
 }
