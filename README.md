@@ -21,7 +21,7 @@ Les différentes méthodes pour utiliser l'API :
 POST :
 
   Création d'un objet Manga => 
-  http://127.0.0.1:8000/api/manga/new
+  http://127.0.0.1:8000/api/manga
 
 GET :
 
@@ -34,12 +34,12 @@ GET :
 PUT :
   
   Editer la totalité d'un manga => 
-  http://127.0.0.1:8000/api/manga/edit/{id}
+  http://127.0.0.1:8000/api/manga/{id}
   
 PATCH :
 
   Editer partiellement un manga => 
-  http://127.0.0.1:8000/api/manga/edit/{id}
+  http://127.0.0.1:8000/api/manga/{id}
   
 DELETE :
 
