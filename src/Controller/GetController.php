@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/manga')]
+#[Route('/api')]
 class GetController extends AbstractController
 {
-    #[Route('/', name: 'app_get', methods: 'GET')]
+    #[Route('/mangas', name: 'app_get', methods: 'GET')]
     public function index(
         MangasRepository $mangasRepo,
     ): JsonResponse {
@@ -23,7 +23,7 @@ class GetController extends AbstractController
         ]);
     }
 
-    #[Route('/{manga}', name: 'get_manga', methods: 'GET')]
+    #[Route('/manga/{manga}', name: 'get_manga', methods: 'GET')]
     public function get(
         $manga,
         MangasRepository $mangasRepo,
