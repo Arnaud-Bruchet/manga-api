@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 #[Route('/api/manga')]
 class PostController extends AbstractController
 {
-    #[Route('/new', name: 'api_post', methods: ['POST'])]
+    #[Route('', name: 'api_post', methods: ['POST'])]
     public function new(
         Request $request,
         MangasRepository $mangasRepository,

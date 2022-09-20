@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 #[Route('/api/manga')]
 class PutController extends AbstractController
 {
-    #[Route('/edit/{manga}', name: 'api_put', methods: ['PUT', 'PATCH'])]
+    #[Route('/{manga}', name: 'api_put', methods: ['PUT', 'PATCH'])]
     public function put(
         Request $request,
         $manga,
